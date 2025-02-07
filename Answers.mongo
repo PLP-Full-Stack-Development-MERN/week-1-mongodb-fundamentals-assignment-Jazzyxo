@@ -1,0 +1,76 @@
+// Question 2
+use library
+db.createCollection("Books")
+
+// Question 3
+db.books.insertMany([
+  { title: "Harry Potter and The Philospher Stone", author: "J.K Rowling", publishedYear: 1997, genre: "Fantasy", ISBN: "1234567" },
+  { title: "It Ends With U", author: "Collen Hoover", publishedYear: 2016, genre: "Fiction", ISBN: 2134567 },
+  { title: "Make It Happen", author: "Jordana Sparks", publishedYear: 2020, genre: "Self-Help", ISBN: 3124567 },
+  { title: "The Great Gatsby", author: "F. Scott Fitzgerald", publishedYear: 1925, genre: "Fiction", ISBN: 4123567 },
+  { title: "The Handmaids Tale", author: "Margaret Atwood", publishedYear: 1985, genre: "Fiction", ISBN: 5123467 }
+]);
+
+// Question 4
+db.Books.find()
+
+db.books.find({ author: "J.K Rowling" })
+
+db.books.find({ publishedYear: { $gt: 2000 } })
+
+// Question 5
+db.books.updateOne({ ISBN: "1234567" }, { $set: { publishedYear: 2000 } });
+
+db.books.updateMany({}, { $set: { rating: 4.5 } });
+
+// Question 6
+db.books.deleteOne({ ISBN: 4123567});
+
+db.books.deleteMany({ genre: "Self-Help" });
+
+// Question 7
+use eCommerce
+// Users Collection
+db.users.insertOne({
+  _id: 1, name: "Peter Parker", email: "parkerp12@gmail.com", address: "12 Main St", orders: [1]
+});
+
+// Products Collection
+db.products.insertOne({
+  _id: 1,
+  name: "Laptop",
+  price: 20000,
+  category: "Electronics",
+  stock: 15
+});
+
+// Orders Collection
+db.orders.insertOne({
+  _id: 1,
+  userId: 1,  
+  products: [{ productId: 1, quantity: 1 }],
+  totalAmount: 20000,
+  orderDate: new Date()
+});
+
+// Question 8
+db.books.aggregate([
+  { $group: { _id: "$genre", count: { $sum: 1 } } } ]);
+
+  db.books.aggregate([
+  { $group: { _id: null, avgYear: { $avg: "$publishedYear" } } } ]);
+
+  db.books.find().sort({ rating: -1 }).limit(1)
+
+  // Question 9
+
+  db.books.createIndex({ author: 1 })
+
+
+
+
+
+
+
+
+
